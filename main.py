@@ -17,17 +17,26 @@ async def scrapeData():
 
 @app.get('/weather')
 async def getWeatherFromAPI():
-    data = WeatherController.getWeatherFromAPI()
+    data = []
+    cities = ['Harare', 'Bulawayo', 'Gweru']
+    data.append(WeatherController.getWeatherFromAPI(cities))
     return data
 
 @app.post('/weather/create')
 async def insertIntoWeatherTable():
-    weatherAPIData = WeatherController.getWeatherFromAPI()
-    # print(x)
-    supabase.from_("WeatherTest").insert({
-        "LocationName" : weatherAPIData["LocationName"], 
-        "LocationLat" : weatherAPIData["LocationLat"], 
-        "LocationLong" : weatherAPIData["LocationLong"], 
-        "WindSpeed" : weatherAPIData["WindSpeed"], 
-        "Temp" : weatherAPIData["Temp"]}).execute()
+    data = []
+    cities = ['Harare', 'Bulawayo', 'Gweru']
+    data.append(WeatherController.getWeatherFromAPI(cities))
+    for cityData in data[0]:
+        # print(cityData)
+        try:
+            supabase.from_("WeatherTest").insert({
+                "LocationName" : cityData["LocationName"], 
+                "LocationLat" : cityData["LocationLat"], 
+                "LocationLong" : cityData["LocationLong"], 
+                "WindSpeed" : cityData["WindSpeed"], 
+                "Temp" : cityData["Temp"]}).execute()            
+        except Exception as e:
+            print(e)
+    return data[0]
     
