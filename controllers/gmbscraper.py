@@ -1,6 +1,6 @@
 import pandas as pd
-import os
 import numpy as np
+import os
 from dotenv import load_dotenv
 from supabase import create_client, Client
 import time
