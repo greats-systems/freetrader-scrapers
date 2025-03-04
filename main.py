@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from controllers.gmbscraper import GMBScraper
 from controllers.weather import WeatherController
-# from models.weather import WeatherModel
 from db.supabase import create_supabase_client
 
 app = FastAPI()
@@ -27,14 +26,13 @@ async def getWeatherFromSupabase():
     result = supabase.table("WeatherTest").select('*').order(column='id').execute()
     return result.data
 
-@app.get('/weather/insert-into-supabase')
+@app.get('/weather/supabase/insert')
 async def insertIntoWeatherTable():
-    # pass
     data = []
-    cities = ['Harare', 'Bulawayo', 'Gweru', 'Mutare', 'Masvingo', 'Hwange', 'Victoria Falls', 'Kariba', 'Kwekwe', 'Gwanda', 'Beitbridge']
-    data.append(WeatherController.getWeatherFromAPI(cities))
-    for cityData in data[0]:
-        # print(cityData)
+    # cities = ['Harare', 'Bulawayo', 'Gweru', 'Mutare', 'Masvingo', 'Hwange', 'Victoria Falls', 'Kariba', 'Kwekwe', 'Gwanda', 'Beitbridge']
+    # data.append(WeatherController.getWeatherFromAPI(cities))
+    data.append(WeatherController.getWeatherFromAPI())
+    for cityData in data:
         try:
             supabase.from_("WeatherTest").insert({
                 "LocationName" : cityData["LocationName"], 
@@ -44,5 +42,5 @@ async def insertIntoWeatherTable():
                 "Temp" : cityData["Temp"]}).execute()            
         except Exception as e:
             print(e)
-    return data[0]
+    return 'Weather data has been added successfully!'
     

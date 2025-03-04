@@ -30,5 +30,5 @@ class WeatherController:
                 return e
         return weatherData
         
-    def insertIntoWeatherTable(self):
+    def insertIntoWeatherTable():
         pass

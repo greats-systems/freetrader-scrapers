@@ -2,8 +2,6 @@ import pandas as pd
 import numpy as np
 import os
 from dotenv import load_dotenv
-from supabase import create_client, Client
-import time
 from db.supabase import create_supabase_client
 
 pd.set_option('display.max_rows', None)
@@ -33,8 +31,6 @@ class GMBScraper:
             if str(x)[0]=='$'
             else x
         )
-
-        # supabase: Client = create_client(URL, SERVICE_KEY)
 
         for row in df.iterrows():
             supabase.table("Commodities").insert({"CommodityName":row[1][0], "CommodityProducePrice":row[1][1]}).execute()
