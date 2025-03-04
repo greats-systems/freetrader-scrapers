@@ -15,12 +15,17 @@ async def root():
 async def scrapeData():
     GMBScraper.scrape()
 
-@app.get('/weather')
+@app.get('/weather/open-weather')
 async def getWeatherFromAPI():
     data = []
     cities = ['Harare', 'Bulawayo', 'Gweru', 'Mutare', 'Masvingo', 'Hwange', 'Victoria Falls', 'Kariba', 'Kwekwe', 'Gwanda', 'Beitbridge']
     data.append(WeatherController.getWeatherFromAPI(cities))
     return data[0]
+
+@app.get('/weather/supabase')
+async def getWeatherFromSupabase():
+    result = supabase.table("WeatherTest").select('*').order(column='id').execute()
+    return result.data
 
 @app.get('/weather/insert-into-supabase')
 async def insertIntoWeatherTable():
