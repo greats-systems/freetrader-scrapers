@@ -18,14 +18,15 @@ async def scrapeData():
 @app.get('/weather')
 async def getWeatherFromAPI():
     data = []
-    cities = ['Harare', 'Bulawayo', 'Gweru']
+    cities = ['Harare', 'Bulawayo', 'Gweru', 'Mutare', 'Masvingo', 'Hwange', 'Victoria Falls', 'Kariba', 'Kwekwe', 'Gwanda', 'Beitbridge']
     data.append(WeatherController.getWeatherFromAPI(cities))
-    return data
+    return data[0]
 
-@app.post('/weather/create')
+@app.get('/weather/insert-into-supabase')
 async def insertIntoWeatherTable():
+    # pass
     data = []
-    cities = ['Harare', 'Bulawayo', 'Gweru']
+    cities = ['Harare', 'Bulawayo', 'Gweru', 'Mutare', 'Masvingo', 'Hwange', 'Victoria Falls', 'Kariba', 'Kwekwe', 'Gwanda', 'Beitbridge']
     data.append(WeatherController.getWeatherFromAPI(cities))
     for cityData in data[0]:
         # print(cityData)

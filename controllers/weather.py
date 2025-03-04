@@ -1,21 +1,12 @@
 from dotenv import load_dotenv
 import os
 import requests
-from db.supabase import create_supabase_client
-# from models.weather import WeatherModel
 
 load_dotenv()
 
 WEATHER_SERVICE_API_KEY=os.getenv("WEATHER_SERVICE_API_KEY")
 
 class WeatherController:
-    # baseUrl = 'http://api.weatherapi.com/v1/current.json'
-    # params = {
-    #         'q': 'Harare',
-    #         'key': WEATHER_SERVICE_API_KEY
-    #     }
-    # supabase = create_supabase_client()
-
     def getWeatherFromAPI(cities):
         weatherData = []
         for city in cities:
@@ -28,7 +19,6 @@ class WeatherController:
             try:
                 data = {}
                 response = requests.get(baseUrl, params)
-                print(response.json())
                 data['LocationName']=response.json()['location']['name']
                 data['LocationLat']=response.json()['location']['lat']
                 data['LocationLong']=response.json()['location']['lon']
